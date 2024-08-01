@@ -16,6 +16,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined';
 
 import { Button } from './ui/button';
+import { signOut } from 'next-auth/react';
 
 
 const NavBar = () => {
@@ -27,7 +28,7 @@ const NavBar = () => {
     if (button) {
       button.classList.add('dissolve');
       setTimeout(() => {
-        router.replace('/sign-in');
+        signOut({ callbackUrl: '/' });
       }, 300); // Match the duration of the animation
     }
     };
