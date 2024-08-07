@@ -8,7 +8,7 @@ import React from 'react'
 const page = () => {
   return (
     <div className='flex flex-row'>
-    <div className='w-[285px] h-[1024px] shadow-md border-r border-[#DEDEDE] flex justify-between p-[24px] pt-[16px] pb-[32px]'>
+    <div className='w-[285px] h-[1024px] shadow-md border-r border-[#DEDEDE] justify-between pl-[24px] pt-[16px] pb-[32px]'>
         <NavBar/>
     </div>
     <div>

@@ -3,7 +3,6 @@ import { authOptions } from "../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import mongoose from "mongoose";
 
 export async function GET(request:Request) {
     await dbConnect()
@@ -23,15 +22,11 @@ export async function GET(request:Request) {
         )
     }
 
-    const userId = new mongoose.Types.ObjectId(user.id)
+    
     try {
-        const user = await UserModel.aggregate([
-            { $match: {_id: userId}},
-            { $unwind:'$tasks'},
-            { $sort : {'tasks.createdAt': -1}},
-            { $group :{_id:'$_id',tasks:{$push:'$tasks'}}},
-        ])
-        if (!user || user.length === 0){
+        const userFound = await UserModel.findOne({ _id: user._id })
+
+        if (!userFound){
             return Response.json(
                 {
                     success:false,
@@ -46,7 +41,7 @@ export async function GET(request:Request) {
         return Response.json(
             {
                 success:true,
-                messages: user[0].tasks
+                tasks: userFound.tasks
             },
             {
                 status:200

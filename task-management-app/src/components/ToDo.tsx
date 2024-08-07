@@ -13,30 +13,29 @@ import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 
-
-
-
-
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import { Button } from './ui/button';
 import AddTask from './AddTask';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { useParams } from 'next/navigation';
 
 const ToDo = () => {
+    const params = useParams<{ username: string }>();
+    const username = params.username;
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
 
     function openModal() {
         setIsOpen(true);
-      }
+    }
 
   return (
     <div>
     <div className="flex flex-col gap-y-4">
         <div className='flex flex-row w-[1107px] h-[58px] items-center justify-between'>
-            <p className='w-[460px] h-[58px] font-sans font-semibold text-[48px] leading-[57.6px] text-[#080808]'>
-                Good morning, Joe!
+            <p className='w-auto h-[58px] font-sans font-semibold text-[48px] leading-[57.6px] text-[#080808]'>
+                Good morning, {username}!
             </p>
             <div className='flex flex-row mr-1 items-center w-[170px] h-[24px]'>
                 <p className='w-[135px] h-[19px] font-sans font-normal text-[16px] leading-[19.36px] text-[#080808]'>
@@ -133,7 +132,6 @@ const ToDo = () => {
     </div>
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
-
             </SheetTrigger>
             <SheetContent className="fixed inset-y-0 right-0 w-[670px] sm:max-w-md bg-white shadow-lg p-4">
                 <AddTask />

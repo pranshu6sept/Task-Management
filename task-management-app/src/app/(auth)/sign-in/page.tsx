@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import {
   Form,
   FormField,
@@ -24,7 +24,7 @@ export default function SignInForm() {
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      identifier: '',
+      username: '',
       password: '',
     },
   });
@@ -33,7 +33,7 @@ export default function SignInForm() {
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
     const result = await signIn('credentials', {
       redirect: false,
-      identifier: data.identifier,
+      username: data.username,
       password: data.password,
     });
 
@@ -54,7 +54,8 @@ export default function SignInForm() {
     }
 
     if (result?.url) {
-      router.replace('/dashboard');
+      const username = data.username
+      router.replace(`/u/${username}`);
     }
   };
 
@@ -70,11 +71,11 @@ export default function SignInForm() {
           <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-[24px]">
             <FormField
-              name="identifier"
+              name="username"
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <Input placeholder="Your email"
+                  <Input placeholder="username"
                     {...field} />
                   <FormMessage />
                 </FormItem>

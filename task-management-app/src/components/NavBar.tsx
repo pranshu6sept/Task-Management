@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react'
+import React, { useState } from 'react'
 import '../app/globals.css'
-import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
+import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -17,11 +18,19 @@ import ArrowDownwardOutlinedIcon from '@mui/icons-material/ArrowDownwardOutlined
 
 import { Button } from './ui/button';
 import { signOut } from 'next-auth/react';
+import AddTask from './AddTask';
 
 
 const NavBar = () => {
 
-    const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
+
+    const params = useParams<{ username: string }>();
+    const username = params.username;
+
+    function openModal() {
+        setIsOpen(true);
+    }
 
     const handleClick = () => {
     const button = document.querySelector('.navigate-button');
@@ -42,7 +51,7 @@ const NavBar = () => {
                 </div>
                 <div className='h-[24px] w-[130px]'>
                     <p className='font-sans font-medium text-[20px] text-[#080808] leading-[24.2px]'>
-                        Joe Gardner
+                        {username}
                     </p>
                 </div>
             </div>
@@ -82,7 +91,7 @@ const NavBar = () => {
                     <p className='text'>Analytics</p>
                 </button>
             
-            <Button className="w-[253px] h-[52px] rounded-[8px] border p-2 shadow-inner bg-[#4B36CC] hover:bg-gradient-to-b from-[#9C93D4] to-[#4B36CC]"
+            <Button onClick={openModal} className="w-[253px] h-[52px] rounded-[8px] border p-2 shadow-inner bg-[#4B36CC] hover:bg-gradient-to-b from-[#9C93D4] to-[#4B36CC]"
             >
                 <p className='w-[156px] h-[24px] font-sans font-medium text-[20px] leading-[24.3px] text-[#FFFFFF]'>Create new task </p>
                 <AddCircleRoundedIcon className='icon ml-1'/>
@@ -96,6 +105,13 @@ const NavBar = () => {
                 <p className='w-[189px] h-[17px] font-sans font-normal text-[14px] leading-[16.94px] text-[#666666]'>Get the full experience</p>
             </div>
         </button>
+        <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+            </SheetTrigger>
+            <SheetContent className="fixed inset-y-0 right-0 w-[670px] sm:max-w-md bg-white shadow-lg p-4">
+                <AddTask />
+            </SheetContent>
+        </Sheet>
     </div>
   )
 }

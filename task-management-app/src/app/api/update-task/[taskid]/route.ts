@@ -5,8 +5,8 @@ import UserModel from "@/model/User";
 import { User } from "next-auth";
 
 
-export async function PATCH(request:Request,{params}: {params:{taskid:string}}) {
-    const taskId = params.taskid
+export async function PATCH(request:Request,{params}: {params:{taskId:string}}) {
+    const taskId = params.taskId
     await dbConnect()
 
     const session = await getServerSession(authOptions)
@@ -28,16 +28,22 @@ export async function PATCH(request:Request,{params}: {params:{taskid:string}}) 
         const { title, description, status, priority, deadline } = await request.json();
 
         const updateResult = await UserModel.updateOne(
-            {_id:user._id},
             {
-                title,
-                description,
-                status,
-                priority,
-                deadline
+                _id: user._id,
+                'tasks._id': taskId // Match the user and the task within the tasks array
             },
-            { new:true }
+            {
+                $set: {
+                    'tasks.$.title': title,
+                    'tasks.$.description': description,
+                    'tasks.$.status': status,
+                    'tasks.$.priority': priority,
+                    'tasks.$.deadline': deadline
+                }
+            }
         )
+
+
         if(updateResult.modifiedCount === 0){
             return Response.json(
                 {
