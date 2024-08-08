@@ -98,7 +98,7 @@ const NavBar = () => {
             </Button>
             </div>
         </div>
-        <button className='mt-40 flex flex-row items-center justify-center gap-x-2 w-[253px] h-[61px] bg-[#F3F3F3]'>
+        <button className='mt-40 flex flex-row flex-grow items-center justify-center gap-x-2 w-[253px] h-[61px] bg-[#F3F3F3]'>
             <ArrowDownwardOutlinedIcon className='w-auto h-[20px] top-[6.67px] left-[14.17px]'/>
             <div className='flex flex-col'>
                 <p className='w-[189px] h-[24px] font-sans font-medium text-[20px] leading-[24.2px] text-[#666666]'>Download the app</p>

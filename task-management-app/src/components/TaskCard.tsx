@@ -41,17 +41,17 @@ const TaskCard = ({task} :TaskCardProps) => {
 
 return (
     <div>
-        <Card className="w-[240px]">
-          <CardHeader>
+        <Card className="w-[240px] flex flex-col h-[220px]">
+          <CardHeader className='pb-2'>
             {task.title && (
               <h2 className="font-sans font-normal text-[18px] leading-[21.4px] text-[#555555]">
                 {task.title}
               </h2>
             )}
           </CardHeader>
-          <CardContent className="space-y-1">
+          <CardContent className="space-y-2 flex-grow">
             {task.description && (
-              <p className="font-sans font-light text-[14px] leading-[18.2px] text-[#797979]">
+              <p className="font-san overflow-hidden font-light text-[14px] leading-[18.2px] text-[#797979]">
                 {task.description}
               </p>
             )}
@@ -71,7 +71,7 @@ return (
               </p>
             )}
           </CardContent>
-          <CardFooter>
+          <CardFooter className='pt-2'>
             {task.createdAt && (
               <p className="font-sans font-normal text-[18px] leading-[21.4px] text-[#797979]">
                 <TimeElapsed createdAt={task.createdAt} />

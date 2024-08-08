@@ -1,4 +1,5 @@
-import { Task } from "@/model/Task";
+import { Task } from "@/model/User";
+
 
 export interface ApiResponse{
     success: boolean;

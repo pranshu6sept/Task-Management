@@ -18,13 +18,26 @@ import { Button } from './ui/button';
 import AddTask from './AddTask';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { useParams } from 'next/navigation';
+import { Task } from '@/model/User';
 
-const ToDo = () => {
+
+type TaskCardProps = {
+    task:Task;
+};
+
+const ToDo = ({task} :TaskCardProps) => {
     const params = useParams<{ username: string }>();
     const username = params.username;
 
+    const [tasks, setTasks] = useState<Task[] | null>(null);
+
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    
+
+    const filteredtasks = tasks?.filter(task =>
+        task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     function openModal() {
         setIsOpen(true);
