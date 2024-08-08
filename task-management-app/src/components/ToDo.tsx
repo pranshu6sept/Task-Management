@@ -25,19 +25,19 @@ type TaskCardProps = {
     task:Task;
 };
 
-const ToDo = ({task} :TaskCardProps) => {
+const ToDo = () => {
     const params = useParams<{ username: string }>();
     const username = params.username;
 
-    const [tasks, setTasks] = useState<Task[] | null>(null);
+    // const [tasks, setTasks] = useState<Task[] | null>(null);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     
 
-    const filteredtasks = tasks?.filter(task =>
-        task.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    // const filteredtasks = tasks?.filter(task =>
+    //     task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    // );
 
     function openModal() {
         setIsOpen(true);
